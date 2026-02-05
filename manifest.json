@@ -12,7 +12,7 @@
                 "checksum": "183e78cb44a63faa87a7c98f6edb22f9",
                 "changelog": "Alpha release for manifest testing purposes.",
                 "targetAbi": "10.11.6.0",
-                "sourceUrl": "https://github.com/moeux/FinTrim/releases/download/1.0.0-alpha/FinTrim.zip",
+                "sourceUrl": "https://github.com/moeux/FinTrim/releases/download/1.0.0-alpha/FinTrim_1.0.0.zip",
                 "timestamp": "2026-02-05T01:44:00Z",
                 "version": "1.0.0"
             }
