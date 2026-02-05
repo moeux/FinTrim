@@ -6,14 +6,15 @@
         "description": "This plugin automatically cleans up any consumed media.",
         "owner": "moeux",
         "overview": "Clean up consumed media",
+        "imageUrl": "https://github.com/moeux/FinTrim/blob/379dd147fbd338b2ea02df5e21223400269250d3/img/fintrim.jpg"
         "versions": [
             {
-                "checksum": "TODO",
-                "changelog": "TODO",
-                "targetAbi": "TPDP",
-                "sourceUrl": "TODO",
-                "timestamp": "TOODO",
-                "version": "TODO"
+                "checksum": "<checksum>",
+                "changelog": "<changelog>",
+                "targetAbi": "10.11.0.0",
+                "sourceUrl": "<github releases url>",
+                "timestamp": "<timestamp>",
+                "version": "1.0.0"
             }
         ]
     }
