@@ -1,16 +1,23 @@
 using FinTrim.Configuration;
-using FinTrim.Services;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
-using MediaBrowser.Controller;
-using MediaBrowser.Controller.Plugins;
+using MediaBrowser.Model.Plugins;
 using MediaBrowser.Model.Serialization;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FinTrim;
 
 public class FinTrim : BasePlugin<PluginConfiguration>, IHasWebPages
 {
+    private static FinTrim _instance = null!;
+
+    public FinTrim(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer) :
+        base(applicationPaths, xmlSerializer)
+    {
+        _instance = this;
+    }
+
+    public static IPluginConfiguration PluginConfiguration => _instance.Configuration;
+
     public override string Name => Resources.PluginName;
     public override Guid Id => Guid.Parse(Resources.PluginId);
 
