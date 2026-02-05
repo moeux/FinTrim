@@ -14,7 +14,7 @@ public interface IPluginConfiguration
     public bool DeletePhotos { get; set; }
     public bool DeleteVideos { get; set; }
     public bool DeleteImmediately { get; set; }
-    public string ExcludedTag { get; set; }
+    public string ExcludedTags { get; set; }
 
     public BaseItemKind[] GetItemTypesToDelete()
     {
@@ -30,5 +30,10 @@ public interface IPluginConfiguration
         };
 
         return itemTypes.Where(pair => pair.Item1).Select(pair => pair.Item2).ToArray();
+    }
+
+    public string[] GetExcludedTags()
+    {
+        return ExcludedTags.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
     }
 }

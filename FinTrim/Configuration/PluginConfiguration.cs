@@ -14,5 +14,5 @@ public class PluginConfiguration : BasePluginConfiguration, IPluginConfiguration
     public bool DeletePhotos { get; set; } = false;
     public bool DeleteVideos { get; set; } = false;
     public bool DeleteImmediately { get; set; } = false;
-    public string ExcludedTag { get; set; } = string.Empty;
+    public string ExcludedTags { get; set; } = string.Empty;
 }
