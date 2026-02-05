@@ -1,0 +1,12 @@
+{
+    "category": "General",
+    "changelog": "Version 1.0.0",
+    "description": "This plugin automatically cleans up any consumed media.",
+    "guid": "c479e133-ac5f-4dd9-a5cf-c04146fdf10f",
+    "name": "FinTrim",
+    "overview": "Clean up consumed media",
+    "owner": "moeux",
+    "targetAbi": "10.11.6.0",
+    "timestamp": "2026-02-05T01:46:55Z",
+    "version": "1.0.0"
+}
