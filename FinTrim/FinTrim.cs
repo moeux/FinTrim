@@ -9,15 +9,20 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FinTrim;
 
-public class FinTrim(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer)
-    : BasePlugin<PluginConfiguration>(applicationPaths, xmlSerializer), IPluginServiceRegistrator
+public class FinTrim : BasePlugin<PluginConfiguration>, IHasWebPages
 {
     public override string Name => Resources.PluginName;
     public override Guid Id => Guid.Parse(Resources.PluginId);
 
-    public void RegisterServices(IServiceCollection serviceCollection, IServerApplicationHost applicationHost)
+    public IEnumerable<PluginPageInfo> GetPages()
     {
-        serviceCollection.AddSingleton<IPluginConfiguration>(_ => Configuration);
-        serviceCollection.AddHostedService<PlaybackStoppedService>();
+        return
+        [
+            new PluginPageInfo
+            {
+                Name = Resources.PluginName,
+                EmbeddedResourcePath = $"{GetType().Namespace}.Web.configPage.html"
+            }
+        ];
     }
 }

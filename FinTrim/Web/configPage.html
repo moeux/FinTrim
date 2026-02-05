@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>FinTrim Configuration Page</title>
+</head>
+<body>
+<div class="page type-interior pluginConfigurationPage"
+     data-require="emby-input,emby-button,emby-checkbox,emby-checkbox-label"
+     data-role="page"
+     id="PluginConfigPage">
+    <div data-role="content">
+        <div class="content-primary">
+            <h2>FinTrim Settings</h2>
+
+            <form id="PluginConfigForm">
+                <h3>General</h3>
+
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="Interval">Interval</label>
+                    <input class="emby-input" id="Interval" is="emby-input" min="1" type="number"/>
+                    <div class="fieldDescription">Sets the day interval of the cleanups.</div>
+                </div>
+
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="ExcludedTags">Excluded Tags</label>
+                    <input id="ExcludedTags" is="emby-input" type="text"/>
+                    <div class="fieldDescription">Add tags to exclude from the cleanup, seperated by a comma.</div>
+                </div>
+
+                <div class="checkboxContainer checkboxContainer-withDescription">
+                    <label class="emby-checkbox-label">
+                        <input class="emby-checkbox"
+                               id="IncludeFavorites"
+                               is="emby-checkbox"
+                               name="IncludeFavorites"
+                               type="checkbox"/>
+                        <span>Include Favorites</span>
+                    </label>
+                    <div class="fieldDescription">Includes favorites in the cleanup.</div>
+                </div>
+
+                <div class="checkboxContainer checkboxContainer-withDescription">
+                    <label class="emby-checkbox-label">
+                        <input class="emby-checkbox"
+                               id="DeleteImmediately"
+                               is="emby-checkbox"
+                               name="DeleteImmediately"
+                               type="checkbox"/>
+                        <span>Cleanup Immediately</span>
+                    </label>
+                    <div class="fieldDescription">Start cleanup immediately after playing media to completion.</div>
+                </div>
+
+                <div>
+                    <h3>Included Media Types</h3>
+                    <label>Choose which media types will be included in the cleanup.</label>
+                </div>
+
+                <table>
+                    <tr>
+                        <td>
+                            <div class="checkboxContainer">
+                                <label class="emby-checkbox-label">
+                                    <input class="emby-checkbox"
+                                           id="DeleteAudio"
+                                           is="emby-checkbox"
+                                           name="DeleteAudio"
+                                           type="checkbox"/>
+                                    <span>Audio</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="checkboxContainer">
+                                <label class="emby-checkbox-label">
+                                    <input class="emby-checkbox"
+                                           id="DeleteAudioBooks"
+                                           is="emby-checkbox"
+                                           name="DeleteAudioBooks"
+                                           type="checkbox"/>
+                                    <span>Audio Books</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="checkboxContainer">
+                                <label class="emby-checkbox-label">
+                                    <input class="emby-checkbox"
+                                           id="DeleteBooks"
+                                           is="emby-checkbox"
+                                           name="DeleteBooks"
+                                           type="checkbox"/>
+                                    <span>Books</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkboxContainer">
+                                <label class="emby-checkbox-label">
+                                    <input class="emby-checkbox"
+                                           id="DeleteEpisodes"
+                                           is="emby-checkbox"
+                                           name="DeleteEpisodes"
+                                           type="checkbox"/>
+                                    <span>Episodes</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="checkboxContainer">
+                                <label class="emby-checkbox-label">
+                                    <input class="emby-checkbox"
+                                           id="DeleteMovies"
+                                           is="emby-checkbox"
+                                           name="DeleteMovies"
+                                           type="checkbox"/>
+                                    <span>Movies</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="checkboxContainer">
+                                <label class="emby-checkbox-label">
+                                    <input class="emby-checkbox"
+                                           id="DeletePhotos"
+                                           is="emby-checkbox"
+                                           name="DeletePhotos"
+                                           type="checkbox"/>
+                                    <span>Photos</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkboxContainer">
+                                <label class="emby-checkbox-label">
+                                    <input class="emby-checkbox"
+                                           id="DeleteVideos"
+                                           is="emby-checkbox"
+                                           name="DeleteVideos"
+                                           type="checkbox"/>
+                                    <span>Videos</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div>
+                    <button class="raised button-submit block emby-button"
+                            data-theme="b"
+                            is="emby-button"
+                            type="submit">
+                        <span>Save</span>
+                    </button>
+                    <button class="raised button-cancel block btnCancel emby-button"
+                            is="emby-button"
+                            onclick="history.back();"
+                            type="button">
+                        <span>Cancel</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        const PluginConfig = {
+            pluginUniqueId: 'c479e133-ac5f-4dd9-a5cf-c04146fdf10f'
+        };
+
+        document.querySelector('#PluginConfigPage')
+            .addEventListener('pageshow', function () {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(PluginConfig.pluginUniqueId).then(function (config) {
+                    document.querySelector('#Interval').value = config.Interval;
+                    document.querySelector('#IncludeFavorites').checked = config.IncludeFavorites;
+                    document.querySelector('#DeleteAudio').checked = config.DeleteAudio;
+                    document.querySelector('#DeleteAudioBooks').checked = config.DeleteAudioBooks;
+                    document.querySelector('#DeleteBooks').checked = config.DeleteBooks;
+                    document.querySelector('#DeleteEpisodes').checked = config.DeleteEpisodes;
+                    document.querySelector('#DeleteMovies').checked = config.DeleteMovies;
+                    document.querySelector('#DeletePhotos').checked = config.DeletePhotos;
+                    document.querySelector('#DeleteVideos').checked = config.DeleteVideos;
+                    document.querySelector('#DeleteImmediately').checked = config.DeleteImmediately;
+                    document.querySelector('#ExcludedTags').value = config.ExcludedTags;
+                    Dashboard.hideLoadingMsg();
+                });
+            });
+
+        document.querySelector('#PluginConfigForm')
+            .addEventListener('submit', function (e) {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(PluginConfig.pluginUniqueId).then(function (config) {
+                    config.Interval = document.querySelector('#Interval').value;
+                    config.IncludeFavorites = document.querySelector('#IncludeFavorites').checked;
+                    config.DeleteAudio = document.querySelector('#DeleteAudio').checked;
+                    config.DeleteAudioBooks = document.querySelector('#DeleteAudioBooks').checked;
+                    config.DeleteBooks = document.querySelector('#DeleteBooks').checked;
+                    config.DeleteEpisodes = document.querySelector('#DeleteEpisodes').checked;
+                    config.DeleteMovies = document.querySelector('#DeleteMovies').checked;
+                    config.DeletePhotos = document.querySelector('#DeletePhotos').checked;
+                    config.DeleteVideos = document.querySelector('#DeleteVideos').checked;
+                    config.DeleteImmediately = document.querySelector('#DeleteImmediately').checked;
+                    config.ExcludedTags = document.querySelector('#ExcludedTags').value;
+
+                    ApiClient.updatePluginConfiguration(PluginConfig.pluginUniqueId, config).then(function (result) {
+                        Dashboard.processPluginConfigurationUpdateResult(result);
+                    });
+                });
+
+                e.preventDefault();
+                return false;
+            });
+    </script>
+</div>
+</body>
+</html>
