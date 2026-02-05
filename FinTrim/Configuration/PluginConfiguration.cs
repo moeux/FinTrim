@@ -9,8 +9,8 @@ public class PluginConfiguration : BasePluginConfiguration, IPluginConfiguration
     public bool DeleteAudio { get; set; } = false;
     public bool DeleteAudioBooks { get; set; } = false;
     public bool DeleteBooks { get; set; } = false;
-    public bool DeleteEpisodes { get; set; } = true;
-    public bool DeleteMovies { get; set; } = true;
+    public bool DeleteEpisodes { get; set; } = false;
+    public bool DeleteMovies { get; set; } = false;
     public bool DeletePhotos { get; set; } = false;
     public bool DeleteVideos { get; set; } = false;
     public bool DeleteImmediately { get; set; } = false;
