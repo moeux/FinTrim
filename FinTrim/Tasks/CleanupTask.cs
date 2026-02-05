@@ -1,4 +1,3 @@
-using FinTrim.Configuration;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Model.Tasks;
@@ -6,23 +5,36 @@ using Microsoft.Extensions.Logging;
 
 namespace FinTrim.Tasks;
 
-public class CleanupTask(ILogger logger, IPluginConfiguration pluginConfiguration, ILibraryManager libraryManager)
+public class CleanupTask(ILogger<CleanupTask> logger, ILibraryManager libraryManager, IUserManager userManager)
     : IScheduledTask
 {
     public Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
     {
-        var itemList = libraryManager.GetItemList(new InternalItemsQuery
-        {
-            IsPlayed = true,
-            IncludeItemTypes = pluginConfiguration.GetItemTypesToDelete(),
-            ExcludeTags = [pluginConfiguration.ExcludedTag],
-            IsVirtualItem = false
-        });
+        var itemList = userManager.Users.SelectMany(user =>
+                libraryManager.GetItemList(
+                    FinTrim.PluginConfiguration.IncludeFavorites
+                        ? new InternalItemsQuery(user)
+                        {
+                            IsPlayed = true,
+                            IncludeItemTypes = FinTrim.PluginConfiguration.GetItemTypesToDelete(),
+                            ExcludeTags = FinTrim.PluginConfiguration.GetExcludedTags(),
+                            IsVirtualItem = false
+                        }
+                        : new InternalItemsQuery(user)
+                        {
+                            IsFavorite = false,
+                            IsPlayed = true,
+                            IncludeItemTypes = FinTrim.PluginConfiguration.GetItemTypesToDelete(),
+                            ExcludeTags = FinTrim.PluginConfiguration.GetExcludedTags(),
+                            IsVirtualItem = false
+                        }))
+            .DistinctBy(item => item.Id)
+            .ToArray();
 
         logger.LogInformation("Starting cleanup task.");
         progress.Report(0);
 
-        for (var i = 0; i < itemList.Count; i++)
+        for (var i = 0; i < itemList.Length; i++)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -31,9 +43,9 @@ public class CleanupTask(ILogger logger, IPluginConfiguration pluginConfiguratio
                 return Task.FromCanceled(cancellationToken);
             }
 
-            logger.LogInformation("Deleting item {Name} ({Index} / {Total})", itemList[i].Name, i + 1, itemList.Count);
+            logger.LogInformation("Deleting item {Name} ({Index} / {Total})", itemList[i].Name, i + 1, itemList.Length);
             libraryManager.DeleteItem(itemList[i], new DeleteOptions { DeleteFileLocation = true }, true);
-            progress.Report(i / (double)itemList.Count * 100);
+            progress.Report(i / (double)itemList.Length * 100);
         }
 
         logger.LogInformation("Cleanup complete.");
@@ -48,7 +60,7 @@ public class CleanupTask(ILogger logger, IPluginConfiguration pluginConfiguratio
             new TaskTriggerInfo
             {
                 Type = TaskTriggerInfoType.IntervalTrigger,
-                IntervalTicks = TimeSpan.FromDays(pluginConfiguration.Interval).Ticks
+                IntervalTicks = TimeSpan.FromDays(FinTrim.PluginConfiguration.Interval).Ticks
             }
         ];
     }
