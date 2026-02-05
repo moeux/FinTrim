@@ -9,12 +9,12 @@
         "imageUrl": "https://github.com/moeux/FinTrim/blob/379dd147fbd338b2ea02df5e21223400269250d3/img/fintrim.jpg"
         "versions": [
             {
-                "checksum": "<checksum>",
-                "changelog": "<changelog>",
+                "checksum": "fd2d3a09c28253186548ffca405a32e5cd2cf9055d766e95f8e525ff4382fa48",
+                "changelog": "Alpha release for manifest testing purposes.",
                 "targetAbi": "10.11.0.0",
-                "sourceUrl": "<github releases url>",
-                "timestamp": "<timestamp>",
-                "version": "1.0.0"
+                "sourceUrl": "https://github.com/moeux/FinTrim/releases/download/1.0.0-alpha/FinTrim.zip",
+                "timestamp": "2026-02-05T01:44:00Z",
+                "version": "1.0.0-alpha"
             }
         ]
     }
