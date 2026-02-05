@@ -1,0 +1,20 @@
+[
+    {
+        "category": "General",
+        "guid": "d83440b7-fd88-4f19-b580-446e608e4840",
+        "name": "FinTrim",
+        "description": "This plugin automatically cleans up any consumed media.",
+        "owner": "moeux",
+        "overview": "Clean up consumed media",
+        "versions": [
+            {
+                "checksum": "TODO",
+                "changelog": "TODO",
+                "targetAbi": "TPDP",
+                "sourceUrl": "TODO",
+                "timestamp": "TOODO",
+                "version": "TODO"
+            }
+        ]
+    }
+]
