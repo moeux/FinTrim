@@ -1,7 +1,7 @@
 [
     {
         "category": "General",
-        "guid": "d83440b7-fd88-4f19-b580-446e608e4840",
+        "guid": "c479e133-ac5f-4dd9-a5cf-c04146fdf10f",
         "name": "FinTrim",
         "description": "This plugin automatically cleans up any consumed media.",
         "owner": "moeux",
