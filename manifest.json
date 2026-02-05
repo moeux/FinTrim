@@ -6,7 +6,7 @@
         "description": "This plugin automatically cleans up any consumed media.",
         "owner": "moeux",
         "overview": "Clean up consumed media",
-        "imageUrl": "https://github.com/moeux/FinTrim/blob/379dd147fbd338b2ea02df5e21223400269250d3/img/fintrim.jpg"
+        "imageUrl": "https://raw.githubusercontent.com/moeux/FinTrim/379dd147fbd338b2ea02df5e21223400269250d3/img/fintrim.jpg"
         "versions": [
             {
                 "checksum": "fd2d3a09c28253186548ffca405a32e5cd2cf9055d766e95f8e525ff4382fa48",
