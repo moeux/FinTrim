@@ -4,6 +4,7 @@
     <option name="locations">
       <list>
         <option value="$PROJECT_DIR$/FinTrim/bin/Debug/net9.0/publish" />
+        <option value="$PROJECT_DIR$/FinTrim/bin/Release/net9.0/publish" />
       </list>
     </option>
   </component>
