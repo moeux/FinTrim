@@ -1,39 +1,31 @@
-using FinTrim.Configuration;
 using FinTrim.Tasks;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Session;
 using MediaBrowser.Model.Tasks;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace FinTrim.Services;
 
-public class PlaybackStoppedService(
-    ILogger logger,
-    ISessionManager sessionManager,
-    ITaskManager taskManager,
-    IPluginConfiguration pluginConfiguration)
-    : IHostedService
+public class PlaybackStoppedService
 {
-    public Task StartAsync(CancellationToken cancellationToken)
-    {
-        logger.LogInformation("PlaybackStoppedService starting.");
-        sessionManager.PlaybackStopped += SessionManagerOnPlaybackStopped;
-        return Task.CompletedTask;
-    }
+    private readonly ILogger<PlaybackStoppedService> _logger;
+    private readonly ITaskManager _taskManager;
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    public PlaybackStoppedService(
+        ILogger<PlaybackStoppedService> logger,
+        ISessionManager sessionManager,
+        ITaskManager taskManager)
     {
-        logger.LogInformation("PlaybackStoppedService stopping.");
-        sessionManager.PlaybackStopped -= SessionManagerOnPlaybackStopped;
-        return Task.CompletedTask;
+        _logger = logger;
+        _taskManager = taskManager;
+        sessionManager.PlaybackStopped += SessionManagerOnPlaybackStopped;
     }
 
     private void SessionManagerOnPlaybackStopped(object? sender, PlaybackStopEventArgs e)
     {
-        if (!e.PlayedToCompletion || !pluginConfiguration.DeleteImmediately) return;
+        if (!e.PlayedToCompletion || !FinTrim.PluginConfiguration.DeleteImmediately) return;
 
-        logger.LogInformation("Playback to completion event triggered, queuing cleanup task.");
-        taskManager.QueueIfNotRunning<CleanupTask>();
+        _logger.LogInformation("Playback to completion event triggered, queuing cleanup task.");
+        _taskManager.QueueIfNotRunning<CleanupTask>();
     }
 }
